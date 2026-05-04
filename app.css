@@ -1,0 +1,306 @@
+/* Polished Marriage Ritual App — wedding-stationery aesthetic */
+:root {
+  --paper: #faf5ec;
+  --paper-2: #f3ead8;
+  --paper-3: #ece0c5;
+  --ink: #2a1f17;
+  --ink-2: #4a3a2c;
+  --ink-3: #7a6a58;
+  --ink-4: #b3a48c;
+  --rule: #c9b893;
+
+  --gold: #c8893a;
+  --gold-deep: #a06b1f;
+  --henna: #a64633;
+  --sage: #4f6b4a;
+
+  --gold-soft: #f1e2c0;
+  --henna-soft: #efd4c9;
+  --sage-soft: #d6dec8;
+
+  --shadow-soft: 0 1px 2px rgba(60,40,20,0.06), 0 12px 32px rgba(60,40,20,0.08);
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.7) inset, 0 2px 4px rgba(60,40,20,0.05), 0 24px 48px -12px rgba(60,40,20,0.18);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'EB Garamond', 'Garamond', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle paper texture - faint speckle */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.6;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(168, 130, 80, 0.04) 0, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(120, 80, 40, 0.04) 0, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 0, transparent 50%);
+  z-index: 0;
+}
+
+/* ===== TYPOGRAPHY ===== */
+.display {
+  font-family: 'Cormorant Garamond', 'Cormorant', serif;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+.display-italic {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+}
+.smallcaps {
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+.smallcaps-lg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ===== ORNAMENTS ===== */
+.rule-hair {
+  border: 0;
+  height: 1px;
+  background: var(--rule);
+  margin: 0;
+}
+.rule-fade {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rule) 20%, var(--rule) 80%, transparent);
+  margin: 16px 0;
+}
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--gold-deep);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+}
+.ornament::before, .ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rule), transparent);
+}
+.ornament-glyph {
+  font-size: 22px;
+  letter-spacing: 0.4em;
+}
+
+.dot-rule {
+  height: 8px;
+  background-image: radial-gradient(circle, var(--rule) 1px, transparent 1.5px);
+  background-size: 10px 8px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  text-decoration: none;
+}
+.btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-primary:hover {
+  background: var(--henna);
+  border-color: var(--henna);
+}
+.btn-gold {
+  background: var(--gold);
+  color: var(--paper);
+  border-color: var(--gold);
+}
+.btn-gold:hover {
+  background: var(--gold-deep);
+  border-color: var(--gold-deep);
+}
+.btn-ghost {
+  border-color: transparent;
+}
+.btn-ghost:hover {
+  background: rgba(0,0,0,0.04);
+  color: var(--ink);
+}
+
+/* ===== FORM CONTROLS ===== */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 500;
+}
+.field-input {
+  font-family: 'EB Garamond', serif;
+  font-size: 19px;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  padding: 6px 0 8px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.field-input:focus {
+  border-bottom-color: var(--gold);
+}
+.field-input::placeholder {
+  color: var(--ink-4);
+  font-style: italic;
+}
+
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  padding: 6px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.chip:hover { border-color: var(--ink-3); color: var(--ink); }
+.chip.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+/* ===== PLACEHOLDER IMAGE ===== */
+.placeholder-img {
+  background:
+    repeating-linear-gradient(135deg, transparent 0 12px, rgba(120,80,40,0.06) 12px 13px),
+    linear-gradient(135deg, var(--paper-2), var(--paper-3));
+  border: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ===== DROP CAP ===== */
+.dropcap::first-letter {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 5.2em;
+  line-height: 0.85;
+  float: left;
+  padding: 6px 12px 0 0;
+  color: var(--gold-deep);
+  font-style: italic;
+}
+
+/* ===== UTILITY ===== */
+.center { text-align: center; }
+.muted { color: var(--ink-3); }
+.faint { color: var(--ink-4); }
+.italic { font-style: italic; }
+
+/* App container */
+#app {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* Sticky page nav (top) */
+.app-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250, 245, 236, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+}
+.brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+}
+.brand-mark {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 26px;
+  color: var(--gold-deep);
+  font-size: 14px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Print styles */
+@media print {
+  .app-nav, .no-print { display: none !important; }
+  body { background: white; }
+  body::before { display: none; }
+}

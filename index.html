@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Two Hearts, Two Worlds — A Marriage Ritual App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="app.css" />
+</head>
+<body>
+<div id="app"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="polished-input.jsx"></script>
+<script type="text/babel" src="polished-output.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "palette": "saffron",
+  "view": "input"
+}/*EDITMODE-END*/;
+
+const PALETTES = {
+  saffron: {
+    '--gold': '#c8893a', '--gold-deep': '#a06b1f',
+    '--henna': '#a64633', '--sage': '#4f6b4a',
+    '--gold-soft': '#f1e2c0', '--henna-soft': '#efd4c9', '--sage-soft': '#d6dec8',
+    '--rule': '#c9b893',
+  },
+  rose: {
+    '--gold': '#c4768a', '--gold-deep': '#9a4a60',
+    '--henna': '#7a3b6b', '--sage': '#5a6a8a',
+    '--gold-soft': '#f0d6dd', '--henna-soft': '#e2cce0', '--sage-soft': '#d4dae6',
+    '--rule': '#cfb3bb',
+  },
+  forest: {
+    '--gold': '#8a7a3a', '--gold-deep': '#5a4f1a',
+    '--henna': '#7a2e2a', '--sage': '#3a5238',
+    '--gold-soft': '#e6dfc1', '--henna-soft': '#e2cac6', '--sage-soft': '#cdd6c8',
+    '--rule': '#c0b896',
+  },
+  midnight: {
+    '--gold': '#9a7c3e', '--gold-deep': '#6a521a',
+    '--henna': '#5a3450', '--sage': '#2c4256',
+    '--gold-soft': '#e8dcb8', '--henna-soft': '#d6cad3', '--sage-soft': '#c5d2dd',
+    '--rule': '#b8a883',
+  },
+};
+
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  const [data, setData] = React.useState({
+    p1: { name: 'Aanya Kapoor', religion: 'Hindu', community: 'Punjabi', country: 'India' },
+    p2: { name: 'Daniel Goldberg', religion: 'Jewish', community: 'Ashkenazi', country: 'United States' },
+    location: 'Udaipur, India',
+    days: 3,
+    dates: 'November 14–16, 2026',
+  });
+
+  React.useEffect(() => {
+    const p = PALETTES[tweaks.palette] || PALETTES.saffron;
+    Object.entries(p).forEach(([k, v]) => document.documentElement.style.setProperty(k, v));
+  }, [tweaks.palette]);
+
+  const view = tweaks.view || 'input';
+  const setView = (v) => setTweak('view', v);
+
+  return (
+    <>
+      {view === 'input' ? (
+        <PolishedInput data={data} setData={setData} onGenerate={() => setView('output')} />
+      ) : (
+        <PolishedOutput data={data} onBack={() => setView('input')} />
+      )}
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection title="View">
+          <TweakRadio
+            label="Page"
+            value={view}
+            onChange={setView}
+            options={[
+              { value: 'input', label: 'Input' },
+              { value: 'output', label: 'Booklet' },
+            ]}
+          />
+        </TweakSection>
+        <TweakSection title="Palette">
+          <TweakSelect
+            label="Theme"
+            value={tweaks.palette}
+            onChange={(v) => setTweak('palette', v)}
+            options={[
+              { value: 'saffron', label: 'Saffron · Henna · Sage (default)' },
+              { value: 'rose', label: 'Rose · Plum · Slate' },
+              { value: 'forest', label: 'Forest · Bronze · Wine' },
+              { value: 'midnight', label: 'Midnight · Brass · Mauve' },
+            ]}
+          />
+        </TweakSection>
+      </TweaksPanel>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+</script>
+</body>
+</html>
